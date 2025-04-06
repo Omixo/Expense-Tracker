@@ -81,31 +81,56 @@ const ExpenseMainApp = () => {
   // ✅ PDF Export
   const generatePDF = (data) => {
     const doc = new jsPDF();
-    doc.setFontSize(18);
-    doc.text("All Expenses Report", 14, 22);
-
-    const tableColumn = ["Date", "Description", "Amount", "Category"];
+    doc.setFontSize(22);
+    doc.setTextColor("#2c3e50");
+    doc.text(" Expense Report", 14, 20);
+    doc.setFontSize(12);
+    doc.setTextColor("#555");
+  
+    const tableColumn = ["Date", "Description", "Amount", "Category", "Remaining Budget"];
     const tableRows = [];
-
+  
+    let runningBudget = budget;
+  
     data.forEach((item) => {
+      const amount = parseFloat(item.amount) || 0;
+      runningBudget -= amount;
+  
       const row = [
         item.date || "N/A",
         item.description || "N/A",
-        item.amount || "N/A",
+        `Rs.${amount.toFixed(2)}`,
         item.category || "N/A",
+        `Rs.${runningBudget.toFixed(2)}`
       ];
       tableRows.push(row);
     });
-
+  
     autoTable(doc, {
       head: [tableColumn],
       body: tableRows,
       startY: 30,
+      styles: {
+        fontSize: 10,
+        cellPadding: 4,
+        textColor: "#333",
+      },
+      headStyles: {
+        fillColor: [52, 152, 219], // blue header
+        textColor: "#fff",
+        fontSize: 11,
+      },
+      alternateRowStyles: {
+        fillColor: [245, 245, 245],
+      },
+      margin: { top: 30 },
+      theme: "grid",
     });
-
-    doc.save("All_Expenses_Report.pdf");
-    toast.success("PDF Downloaded Successfully! 🎉");
+  
+    doc.save("all_Expense_Report.pdf");
+    toast.success("all PDF Downloaded Successfully! 💃🕺");
   };
+  
 
   return (
     <>
