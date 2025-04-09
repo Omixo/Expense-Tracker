@@ -4,12 +4,11 @@ import expenseImage from "../assets/expense.svg";
 import coinstack from "../assets/coin-stack.svg";
 import { AppContext } from "../Context/AppProvider";
 
-import jsPDF from "jspdf";
-import autoTable from "jspdf-autotable"; // ✅ Correct usage
-
 // Toast for download success
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+
 
 // Icons
 import { CiEdit, CiPizza, CiSearch } from "react-icons/ci";
@@ -27,6 +26,7 @@ import Footer from "./Footer";
 import CategoryCards from "./Common/CategoryCards";
 import ButtonCards from "./Common/ButtonCards";
 import BudgetCards from "./Common/Budgetcard";
+import Omibhai from "./Omibhai";
 
 const ExpenseMainApp = () => {
   const { budget, expense, transactions, activeButton, setActiveButton } = useContext(AppContext);
@@ -78,66 +78,73 @@ const ExpenseMainApp = () => {
     applySearchFilter(transactions);
   }, [searchInput]);
 
-  // ✅ PDF Export
-  const generatePDF = (data) => {
-    const doc = new jsPDF();
-    doc.setFontSize(22);
-    doc.setTextColor("#2c3e50");
-    doc.text(" Expense Report", 14, 20);
-    doc.setFontSize(12);
-    doc.setTextColor("#555");
+  // // ✅ PDF Export
+  // const generatePDF = (data) => {
+  //   const doc = new jsPDF();
+  //   doc.setFontSize(22);
+  //   doc.setTextColor("#2c3e50");
+  //   doc.text(" Expense Report", 14, 20);
+  //   doc.setFontSize(12);
+  //   doc.setTextColor("#555");
   
-    const tableColumn = ["Date", "Description", "Amount", "Category", "Remaining Budget"];
-    const tableRows = [];
+  //   const tableColumn = ["Date", "Description", "Amount", "Category", "Remaining Budget"];
+  //   const tableRows = [];
   
-    let runningBudget = budget;
+  //   let runningBudget = budget;
   
-    data.forEach((item) => {
-      const amount = parseFloat(item.amount) || 0;
-      runningBudget -= amount;
+  //   data.forEach((item) => {
+  //     const amount = parseFloat(item.amount) || 0;
+  //     runningBudget -= amount;
   
-      const row = [
-        item.date || "N/A",
-        item.description || "N/A",
-        `Rs.${amount.toFixed(2)}`,
-        item.category || "N/A",
-        `Rs.${runningBudget.toFixed(2)}`
-      ];
-      tableRows.push(row);
-    });
+
+  //     const row = [
+  //       item.date || "N/A",
+  //       item.description || "N/A",
+  //       `Rs.${amount.toFixed(2)}`,
+  //       item.category || "N/A",
+  //       `Rs.${runningBudget.toFixed(2)}`
+  //     ];
+  //     tableRows.push(row);
+  //   });
   
-    autoTable(doc, {
-      head: [tableColumn],
-      body: tableRows,
-      startY: 30,
-      styles: {
-        fontSize: 10,
-        cellPadding: 4,
-        textColor: "#333",
-      },
-      headStyles: {
-        fillColor: [52, 152, 219], // blue header
-        textColor: "#fff",
-        fontSize: 11,
-      },
-      alternateRowStyles: {
-        fillColor: [245, 245, 245],
-      },
-      margin: { top: 30 },
-      theme: "grid",
-    });
+  //   autoTable(doc, {
+  //     head: [tableColumn],
+  //     body: tableRows,
+  //     startY: 30,
+  //     styles: {
+  //       fontSize: 10,
+  //       cellPadding: 4,
+  //       textColor: "#333",
+  //     },
+  //     headStyles: {
+  //       fillColor: [52, 152, 219], // blue header
+  //       textColor: "#fff",
+  //       fontSize: 11,
+  //     },
+  //     alternateRowStyles: {
+  //       fillColor: [245, 245, 245],
+  //     },
+  //     margin: { top: 30 },
+  //     theme: "grid",
+  //   });
   
-    doc.save("all_Expense_Report.pdf");
-    toast.success("all PDF Downloaded Successfully! 💃🕺");
-  };
+  //   doc.save("all_Expense_Report.pdf");
+  //   toast.success("all PDF Downloaded Successfully! 💃🕺");
+  // };
   
 
   return (
     <>
       <div className="main-container">
+        <div className="flex flex-row">
         <h1 className="user text-gray-900 font-bold text-5xl px-5 py-8">
           Hello Omkar Swami,
         </h1>
+        <div>
+          <Omibhai />
+        </div>
+
+        </div>
 
         {/* Budget Cards */}
         <div className="budget-container flex flex-row gap-5 px-10">
@@ -196,8 +203,8 @@ const ExpenseMainApp = () => {
             handleCategoryChange={handleCategoryChange}
           />
 
-          {/* ✅ PDF Download Button */}
-          <CategoryCards
+          
+          {/* <CategoryCards
             category="Downloads"
             icon={<MdOutlinePictureAsPdf className="text-2xl" />}
             index={5}
@@ -206,7 +213,7 @@ const ExpenseMainApp = () => {
               console.log("Downloading PDF...");
               generatePDF(filteredTransaction);
             }}
-          />
+          /> */}
 
           {/* Add Buttons */}
           <ButtonCards
