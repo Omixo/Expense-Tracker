@@ -8,7 +8,9 @@ const App = () => {
     <>
       <Header />
       <AppProvider>
-        <ExpenseMainApp />
+        <ExpenseMainApp 
+        
+        />
       </AppProvider>
     </>
   );
