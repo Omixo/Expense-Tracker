@@ -6,8 +6,8 @@ import deleteImage from "../../src/assets/delete.svg";
 import { AppContext } from "../Context/AppProvider";
 import EditExpense from "./EditExpense";
 import DeleteExpense from "./DeletExpense";
-// import PieChart from "./PieChart";
-// import LineChart from "./LineChart";
+import PieChart from "./PieChart";
+import LineChart from "./LineChart";
 
 const ExpenseTable = ({filteredTransaction , setFilteredTransaction}) => {
      const { transactions , setTransactions,selectedTransaction , setSelectedTransaction} = useContext(AppContext);
@@ -46,10 +46,10 @@ const ExpenseTable = ({filteredTransaction , setFilteredTransaction}) => {
     <>
       {filteredTransaction?.length > 0 ? (
       <>
-        {/* <div className="graph-container flex flex-row m-20">
+        <div className="graph-container flex flex-row m-20">
           <PieChart className="graph-container-content flex-grow" filteredTransaction={filteredTransaction} setFilteredTransaction={setFilteredTransaction} />
           <LineChart className="graph-container-content flex-grow" />
-        </div> */}
+        </div>  
 
         <div className="expense-table border-2 border-gray-300 rounded-2xl mt-8 overflow-x-auto">
           <table className="min-w-full">
